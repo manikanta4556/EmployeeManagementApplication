@@ -11,10 +11,10 @@ import mysql.connector
 con = mysql.connector.connect(host="localhost", user="root", password="",database="employee")
 
 
-# for validating an Date Of Birth1
+# Function to validate_date_of_birth
 def validate_date_of_birth(Date_of_birth):
     try:
-        # Attempt to convert the input string to a datetime object
+        # convert the input string to a datetime object
         date_object = datetime.strptime(Date_of_birth, '%Y-%m-%d')
         
         # Check if the year is within a reasonable range (e.g., not in the future)
@@ -22,10 +22,10 @@ def validate_date_of_birth(Date_of_birth):
         if date_object.year > current_year or date_object.year < (current_year - 150):
             return False
 
-        # If all checks pass, the date is valid
+        
         return True
     except ValueError:
-        # If the conversion fails, the input is not a valid date
+        
         return False
 
 
@@ -69,23 +69,19 @@ def Add_Employ():
     press = input("Press Any Key To Continue..")
     menu()
 
-# Function To Check if Employee With
-# given Name Exist or not
+# Function To Check if Employee With given Name Exist or not
 def check_employee_name(employee_name):
-    # query to select all Rows from
-    # employee(empdata) table
+    # query to select all Rows from employee(empdata) table
     sql = 'select * from empdata where Name=%s'
 
-    # making cursor buffered to make
-    # rowcount method work properly
+    # making cursor buffered to make rowcount method work properly
     c = con.cursor(buffered=True)
     data = (employee_name,)
 
     # Execute the sql query
     c.execute(sql, data)
 
-    # rowcount method to find number
-    # of row a with given values
+    # rowcount method to find number of row a with given values
     r = c.rowcount
     if r == 1:
         return True
@@ -339,6 +335,7 @@ def Average_Salary_Of_An_Employee():
 #Function to get Average Salary of a Department
 def Average_Salary_Of_Department():
     Department=input('Enter Department: ')
+    # Query the database for salaries
     sql = "select salary from empdata where Department = %s"
     data = (Department,)
     c = con.cursor()
